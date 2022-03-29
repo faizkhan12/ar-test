@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/examples/vendor/aframe/build/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.5.0/aframe/build/aframe-ar.js"></script>
+   <!-- <script src="https://aframe.io/releases/0.3.0/aframe.min.js"></script>
+  <script src="https://rawgit.com/oscarmarinmiro/aframe-video-     controls/master/dist/aframe-video-controls.min.js"></script> -->
+</head>
+    <!-- <script>THREEx.ArToolkitContext.baseURL = 'https://rawgit.com/jeromeetienne/ar.js/master/three.js/'</script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"></script>
+  </head>
+  <body style="margin: 0px; overflow: hidden">
+    <div style='position: fixed; top: 10px; width:100%; text-align: center; z-index: 1;'>
+      <button id="image-target-button">
+         Play Video
+      </button>
+  </div>
+    <script>
+      AFRAME.registerComponent("video-handler", {
+        init: function () {
+          let el = this.el;
+          let video = document.querySelector("#myvideo");
+          video.pause();
+          el.addEventListener("mouseenter", function () {
+            console.log("yo");
+            video.play();
+          });
+          el.addEventListener("mouseleave", function () {
+            console.log("pause");
+
+            video.pause();
+          });
+          document.getElementById("image-target-button").addEventListener("click", function() {
+              video.play()
+            })
+        },
+      });
+    </script>
+    <a-scene embedded arjs="trackingMethod: best;">
+      <!-- <a-assets> -->
+        <video
+        width='auto'
+        height='auto'
+          id="myvideo"
+          src="static/mediamonks.mp4"
+
+          crossorigin="anonymous"
+          controls='true'
+          
+        ></video>
+      <!-- </a-assets> -->
+      <a-anchor hit-testing-enabled="true">
+        <!-- <a-box position='0 0.5 0' material='opacity: 0.5;'> -->
+
+        <!-- <a-marker-camera type='pattern' preset='custom'  url='assets/pattern-mediamonks_logo.patt'>   -->
+
+        <!-- <a-marker preset='custom' url='https://github.com/faizkhan12/test-ar/blob/development/pattern-mm.patt'></a-marker> -->
+        <!-- <a-entity
+          random
+          id="random-number"
+          position="1.77 0 0"
+          scale="4 4 4"
+          rotation="-45"
+          text="value: HELLO; color:black"
+        ></a-entity> -->
+
+        <a-plane src="#myvideo"           rotation="-65"
+         video-handler></a-plane>
+        <!-- </a-marker> -->
+        <!-- </a-box> -->
+      </a-anchor>
+      <a-camera-static />
+      <a-videosphere src="#myvideo" rotation="0 180 0"></a-videosphere>
+
+      <a-entity video-controls="src:#myvideo"></a-entity>
+    </a-scene>
+   
+    <script>
+      // fetch
+      //   (
+      //     "http://www.randomnumberapi.com/api/v1.0/random?min=100&max=1000&count=1",
+      //     {
+      //       headers: {
+      //         "Content-Type":
+      //           "application/x-www-form-urlencoded; charset=UTF-8",
+      //       },
+
+      //       withCredentials: true,
+      //     }
+      //   )
+      //   .then((res) => console.log(res));
+      // var random = "123";
+      // var obj = `value:${random};color:#000;`;
+      // var ele = $("#random-number").attr("text", obj);
+    </script>
+  </body>
+</html>
